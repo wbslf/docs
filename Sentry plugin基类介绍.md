@@ -13,13 +13,17 @@ CustomPlugin: 自定义插件类，提供更灵活的扩展能力
 
 
 1. Plugin 基类
+   
 Plugin 基类是所有插件的核心类，所有插件都需要继承自该类，并实现相应的功能。通过继承该基类，插件可以参与 Sentry 的事件流、错误捕获和处理等功能。
 
 主要方法:
 
 setup: 在插件加载时被调用，用于初始化插件。
+
 process_event: 用于处理 Sentry 捕获的事件，允许修改事件内容，或者执行额外的操作（如日志记录）。
+
 is_enabled: 判断插件是否启用，通常可以根据某些条件来决定是否启用插件。
+
 示例：
 
 ```
@@ -41,12 +45,15 @@ class MyCustomPlugin(Plugin):
 ```
 
 2. IssuePlugin 基类
+   
 IssuePlugin 是一个更为专注于问题（事件）处理的插件类，通常用于对 Sentry 中的 Issue 进行扩展和处理。你可以通过继承 IssuePlugin 来创建处理和修改错误事件的插件。
 
 主要方法:
 
 process_issue: 处理并修改 Issue，比如改变事件的状态或添加自定义字段。
+
 get_context: 获取插件的上下文数据（例如，关于事件的附加信息）。
+
 示例：
 
 ```
@@ -64,6 +71,7 @@ class MyIssuePlugin(IssuePlugin):
 
 
 3. MetricsPlugin 基类
+4. 
 MetricsPlugin 是用于处理 Sentry 中的性能指标和事务数据的插件基类。它允许你通过自定义插件来扩展性能数据的捕获和处理。
 
 主要方法:
@@ -84,6 +92,7 @@ class MyMetricsPlugin(MetricsPlugin):
 
 
 4. NotificationPlugin 基类
+   
 NotificationPlugin 用于管理 Sentry 中的通知功能。当你需要自定义 Sentry 错误通知的行为时，可以使用此基类。它允许你拦截通知并进行自定义处理，例如修改通知的内容或发送通知到其他平台（如 Slack、Email 等）。
 
 主要方法:
@@ -105,11 +114,13 @@ class MyNotificationPlugin(NotificationPlugin):
 
 
 5. ExternalServicePlugin 基类
-ExternalServicePlugin 用于集成外部服务，例如与 GitHub、Jira 等服务进行集成。如果你需要将 Sentry 错误事件发送到外部系统，或者接收外部系统的反馈，可以通过继承该插件基类来实现。
+   
+ExternalServicePlugin 用于集成外部服务，例如与 GitHub等服务进行集成。如果你需要将 Sentry 错误事件发送到外部系统，或者接收外部系统的反馈，可以通过继承该插件基类来实现。
 
 主要方法:
 
 send_event_to_service: 将 Sentry 事件发送到外部系统。
+
 process_external_service_event: 处理从外部系统返回的事件数据。
 示例：
 
@@ -128,6 +139,7 @@ class MyExternalServicePlugin(ExternalServicePlugin):
 ```
 
 6. AlertPlugin 基类
+7. 
 AlertPlugin 是用于管理和触发警报的插件基类。它允许你在某些条件下自定义警报的生成，并采取相应的行动（如发送警报、执行某些操作等）。
 
 主要方法:
@@ -149,6 +161,7 @@ class MyAlertPlugin(AlertPlugin):
 ```
 
 7. CustomPlugin 基类
+   
 如果你有一些特殊需求，可以直接创建一个自定义插件类。这个类继承自 Plugin 基类，并实现你需要的所有方法。这种插件可以是用来修改事件数据、扩展外部集成、修改通知行为等。
 
 示例：
